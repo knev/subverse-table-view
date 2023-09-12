@@ -1,6 +1,6 @@
 {
   "name": "subverse-table-view",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "scripts": {
     "build": "rollup --config && pkg -t latest-macos-arm64 dist/subverse-table-view.cjs --out-path bin",
     "start": "node dist/subverse-table-view.cjs",
