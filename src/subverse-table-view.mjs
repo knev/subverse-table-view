@@ -13,18 +13,22 @@ query { subverse { name website description apis {
 	log_in {
 	  name
 	  programmable
+	  footnote
 	}
 	warp_in {
 	  name
 	  programmable
+	  footnote
 	}
 	import_set_avatar {
 	  name
 	  programmable
+	  footnote
 	}
 	import_asset {
 	  name
 	  programmable
+	  footnote
 	}
   } } }
 `;
@@ -63,10 +67,10 @@ async function processGlobalData() {
 | Warp out
 
 <% subverse.forEach(function(s) { %>
-| pass:[<div class="<%= (s.apis.log_in.programmable==undefined) ? 'bk-white' : s.apis.log_in.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.log_in.name %></div>]
-| pass:[<div class="<%= (s.apis.warp_in.programmable==undefined) ? 'bk-white' : s.apis.warp_in.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.warp_in.name %></div>]
-| pass:[<div class="<%= (s.apis.import_set_avatar.programmable==undefined) ? 'bk-white' : s.apis.import_set_avatar.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.import_set_avatar.name %></div>]
-| pass:[<div class="<%= (s.apis.import_asset.programmable==undefined) ? 'bk-white' : s.apis.import_asset.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.import_asset.name %></div>]
+| pass:[<div class="<%= (s.apis.log_in.programmable==undefined) ? 'bk-white' : s.apis.log_in.programmable ? 'bk-grn' : 'bk-red'  %>">]<%= s.apis.log_in.name %>pass:[</div>]
+| pass:[<div class="<%= (s.apis.warp_in.programmable==undefined) ? 'bk-white' : s.apis.warp_in.programmable ? 'bk-grn' : 'bk-red'  %>">]<%= s.apis.warp_in.name %><%= s.apis.warp_in.footnote ? 'footnote:['+s.apis.warp_in.footnote+']' : '' %>pass:[</div>]
+| pass:[<div class="<%= (s.apis.import_set_avatar.programmable==undefined) ? 'bk-white' : s.apis.import_set_avatar.programmable ? 'bk-grn' : 'bk-red'  %>">]<%= s.apis.import_set_avatar.name %>pass:[</div>]
+| pass:[<div class="<%= (s.apis.import_asset.programmable==undefined) ? 'bk-white' : s.apis.import_asset.programmable ? 'bk-grn' : 'bk-red'  %>">]<%= s.apis.import_asset.name %>pass:[</div>]
 | <%= s.name %>
 |
 <% }); %>
