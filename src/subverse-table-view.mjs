@@ -9,11 +9,24 @@ const ejs = require('ejs');
 
 let json_data_ = null;
 const kstr_QUERY= `
-	{ subverse { name website description apis {
-			log_in {
-				name
-			}
-		} } }			
+query { subverse { name website description apis {
+	log_in {
+	  name
+	  programmable
+	}
+	warp_in {
+	  name
+	  programmable
+	}
+	import_set_avatar {
+	  name
+	  programmable
+	}
+	import_asset {
+	  name
+	  programmable
+	}
+  } } }
 `;
 
 async function fetchData() {
@@ -38,29 +51,31 @@ async function processGlobalData() {
 	console.log("data:", json_data_.data);
 
     const template = `
-<table border="1">
-<thead>
-	<tr>
-	<th>Name</th>
-	<th>Website</th>
-	<th>Description</th>
-	</tr>
-</thead>
-<tbody>
-	<% subverse.forEach(function(item) { %>
-	<tr>
-		<td><%= item.name %></td>
-		<td><%= item.website ? item.website : 'N/A' %></td>
-		<td><%= item.description ? item.description : 'N/A' %></td>
-	</tr>
-	<% }); %>
-</tbody>
-</table>
+[role="scrollable-table",cols="^1h,^1h,^1h,^1h,1h,^1h"]
+|===
+| Log in
+| Warp in
+| import/set Avatar
+| import Asset
+// | Inventory
+// | Mic/Cam/Ctrls
+| World/Subverse
+| Warp out
+
+<% subverse.forEach(function(s) { %>
+| pass:[<div class="<%= (s.apis.log_in.programmable==undefined) ? 'bk-white' : s.apis.log_in.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.log_in.name %></div>]
+| pass:[<div class="<%= (s.apis.warp_in.programmable==undefined) ? 'bk-white' : s.apis.warp_in.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.warp_in.name %></div>]
+| pass:[<div class="<%= (s.apis.import_set_avatar.programmable==undefined) ? 'bk-white' : s.apis.import_set_avatar.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.import_set_avatar.name %></div>]
+| pass:[<div class="<%= (s.apis.import_asset.programmable==undefined) ? 'bk-white' : s.apis.import_asset.programmable ? 'bk-grn' : 'bk-red'  %>"><%= s.apis.import_asset.name %></div>]
+| <%= s.name %>
+|
+<% }); %>
+|===
 `;
 
-	const renderedHtml = ejs.render(template, { subverse: json_data_.data.subverse });
+	const str_rendered = ejs.render(template, { subverse: json_data_.data.subverse });
 
-	console.log(renderedHtml);
+	console.log(str_rendered);
 }
 
 fetchData();
